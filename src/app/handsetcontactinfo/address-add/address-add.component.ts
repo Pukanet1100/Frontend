@@ -9,6 +9,7 @@ import { AddressService } from '../../services/address.service';
 })
 export class AddressAddComponent implements OnInit {
   isPopupVisible: boolean = false;
+  isSuccessPopupVisible: boolean = false;
   addressData: any[] = [];
   provinces: string[] = [];
   amphoes: string[] = [];
@@ -85,9 +86,15 @@ export class AddressAddComponent implements OnInit {
     }
 
     this.addressService.addAddress({ ...this.address });
+
+    this.isSuccessPopupVisible = true;
   }
 
   closePopup() {
     this.isPopupVisible = false;
+  }
+  
+  closeSuccessPopup() {
+    this.isSuccessPopupVisible = false;
   }
 }

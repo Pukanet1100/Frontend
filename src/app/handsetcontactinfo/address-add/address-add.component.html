@@ -121,6 +121,21 @@
                     </button>
                 </div>
             </div>
+            <div *ngIf="isSuccessPopupVisible"
+                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div class="bg-white p-6 rounded-md shadow-md w-1/3 text-center">
+                    <div class="flex justify-center items-center pb-[20px]">
+                        <img src="../../../assets/icon/success.png" class="w-[150px]">
+                    </div>
+                    <h2 class="text-[28px] font-semibold mb-4 text-[#8bc540]">บันทึกข้อมูลสำเร็จ!</h2>
+                    <p class="text-gray-700 pb-[10px]">ข้อมูลที่อยู่ของคุณถูกบันทึกเรียบร้อยแล้ว</p>
+                    <button
+                        class="bg-[#8bc540] h-[50px] w-[200px] text-white px-4 py-2 rounded-md hover:bg-[#7db139] mt-4"
+                        (click)="closeSuccessPopup()">
+                        ตกลง
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
