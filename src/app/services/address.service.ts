@@ -32,4 +32,9 @@ export class AddressService {
     const savedAddresses = localStorage.getItem('addresses');
     return savedAddresses ? JSON.parse(savedAddresses) : [];
   }
+
+  clearAddresses() {
+    this.addressesSubject.next([]);
+    localStorage.removeItem('addresses'); 
+  }
 }

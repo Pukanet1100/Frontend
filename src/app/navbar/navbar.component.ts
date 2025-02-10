@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AddressService } from '../services/address.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private addressService: AddressService
   ) { }
 
   ngOnInit() {
@@ -23,6 +25,13 @@ export class NavbarComponent implements OnInit {
       } else {
         this.headername = 'รายการสินค้า';
       }
+    });
+  }
+
+  goHome() {
+    this.addressService.clearAddresses();
+    this.router.navigate(['/main-menu']).then(() => {
+      window.location.reload();
     });
   }
 }
