@@ -1,0 +1,19 @@
+<main class="w-full px-[10%] mt-[10px]">
+    <div *ngIf="!handsets.length" class="text-center mt-[50px]">
+      <div class="font-bold text-[18px]">กรุณาเลือกแบรนด์</div>
+      <div class="font-bold text-[14px] mt-[5px]">สามารถเลือกได้มากที่สุด 1 แบรนด์</div>
+    </div>
+  
+    <div class="mt-[20px] w-full mx-[10px]" *ngIf="handsets.length > 0">
+      <h2 class="text-[20px] font-bold mb-4 text-[#333]">แบรนด์: {{ selectedBrand }}</h2>
+      <div class="grid grid-flow-col grid-rows-2 gap-[16px] my-[16px] mx-[16px] overflow-x-auto h-[145px]">
+        <div *ngFor="let handsetItem of filteredHandsets"
+            class="flex items-center justify-center text-center w-[168px] h-[50px] border-[2px] rounded-[8px] cursor-pointer"
+            [ngClass]="{'bg-[#8bc540] text-white': handsetItem === selectedHandset }"
+            (click)="selectHandset(handsetItem)">
+            {{ handsetItem.subGroupModel }}
+        </div>
+      </div>
+    </div>
+  </main>
+  

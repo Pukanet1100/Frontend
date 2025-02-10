@@ -1,0 +1,24 @@
+.handset{
+    fill: white; 
+}
+
+.accessory{
+    fill: white; 
+}
+
+.sim{
+    fill: white; 
+}
+
+.button-enabled {
+    background-color: #8bc540;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .button-disabled {
+    background-color: #8bc540;
+    opacity: 0.6;
+    color: white;
+    cursor: not-allowed;
+  }

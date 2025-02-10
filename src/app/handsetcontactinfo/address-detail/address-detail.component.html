@@ -1,0 +1,24 @@
+<div class="overflow-x-auto mt-[30px]">
+  <table class="min-w-full border border-gray-300 text-center">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 py-2 border border-gray-300">บ้านเลขที่</th>
+        <th class="px-4 py-2 border border-gray-300">หมู่ที่</th>
+        <th class="px-4 py-2 border border-gray-300">ตำบล/แขวง</th>
+        <th class="px-4 py-2 border border-gray-300">อำเภอ/เขต</th>
+        <th class="px-4 py-2 border border-gray-300">จังหวัด</th>
+        <th class="px-4 py-2 border border-gray-300">รหัสไปรษณีย์</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let address of addresses" class="hover:bg-gray-50">
+        <td class="px-4 py-2 border border-gray-300">{{ address.houseNumber }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.villageNumber }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.subDistrict }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.district }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.province }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.postalCode }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

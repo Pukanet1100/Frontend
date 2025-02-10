@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --mc-primary-color: #8bc540;
+    --mc-green-100: #ddeec6;
+    --mc-green-1000: #2f6b13;
+    --mc-white-color: #ffffff;
+    --mc-gray-color: #91a4ae;
+    --mc-red-color: #da5b49;
+    --mc-primary-faded-color: #f1f8e8;
+    --mc-text-primary-color: #38454c;
+    --mc-text-secondary-color: #657884;
+    --mc-gray-50: #fafafa;
+    --mc-gray-100: #f2f4f6;
+    --mc-gray-200: #dae1e6;
+    --mc-gray-300: #cfd8dc;
+    --mc-gray-400: #b0bec5;
+    --mc-magenta: #771c35;
+
+    --mc-font-size-regular: 16px;
+}
+
+@font-face {
+    font-family: "FontSystem";
+    src: url("assets/fonts/db_helvethaicaais_x_v3.2-webfont.ttf") format("truetype");
+}
+
+
+html,
+body {
+    height: 100%;
+    font-family: "FontSystem", serif !important;
+}

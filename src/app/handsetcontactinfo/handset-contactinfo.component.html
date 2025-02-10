@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<main class="w-full px-[10%] mt-[30px]">
+  <div class="flex justify-center">
+    <div class="flex items-start gap-8 w-full">
+      <img [src]="selectedProduct?.thumbnail || '../../assets/icon/image.png'"
+        class="h-[350px] max-w-full object-contain" (error)="onImageError($event)" alt="Product Image" />
+      <div class="space-y-10 w-full">
+        <div class="flex">
+          <div class="text-[24px]">{{ selectedProduct?.commercialName }}</div>
+        </div>
+        <div>
+          <span>เลือกสี</span>
+          <div class="flex justify-between mt-[30px] w-full">
+            <div *ngFor="let color of ['silver', 'blue', 'graphite', 'gold']"
+              class="flex flex-col items-center justify-center cursor-pointer w-full">
+              <div class="w-[58px] h-[58px] mb-[10px] rounded-full border-[6px] border-gray-200" [ngClass]="{
+                            'bg-gray-300': color === 'silver',
+                            'bg-[#055160]': color ===  'blue',
+                            'bg-[#2b2f32]': color === 'graphite',
+                            'bg-yellow-400': color === 'gold',
+                            'ring-[4px] ring-[#8bc540]': selectedColor === color
+                          }" (click)="selectColor(color)">
+              </div>
+              <span class="mt-2">{{ color | uppercase }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-[30px]">
+    <div class="flex space-x-4">
+      <button class="w-[150px] h-[40px] rounded-[8px] border-[1px]"
+        [ngClass]="{'bg-[#8bc540] text-white': selectedComponent === 'add', 'bg-white text-black': selectedComponent !== 'add'}"
+        (click)="selectComponent('add')">
+        เพิ่มที่อยู่
+      </button>
+
+      <button class="w-[150px] h-[40px] rounded-[8px] border-[1px]"
+        [ngClass]="{'bg-[#8bc540] text-white': selectedComponent === 'detail', 'bg-white text-black': selectedComponent !== 'detail'}"
+        (click)="selectComponent('detail')">
+        ที่อยู่
+      </button>
+    </div>
+
+    <app-address-add *ngIf="selectedComponent === 'add'"></app-address-add>
+    <app-address-detail *ngIf="selectedComponent === 'detail'"></app-address-detail>
+  </div>
+</main>

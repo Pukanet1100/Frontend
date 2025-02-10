@@ -1,0 +1,14 @@
+<main class="px-[10%] mt-[10px]">
+  <div class="w-full h-[285px] flex bg-[#cae8a3]">
+    <div class="w-full overflow-x-auto">
+      <div class="grid grid-flow-col grid-rows-2 gap-[16px] my-[16px] mx-[16px]">
+        <div *ngFor="let brand of brands" (click)="selectBrand(brand)">
+          <div class="w-[110px] h-[110px] flex justify-center items-center bg-white rounded-full shadow cursor-pointer"
+            [ngClass]="{'ring-[4px] ring-[#8bc540]': selectedBrand === brand}">
+            <img [src]="brand.imageUrl" alt="" class="w-[70px] h-[70px] object-contain">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

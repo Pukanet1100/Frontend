@@ -1,0 +1,40 @@
+<main class="w-full px-[10%] pb-[120px]">
+  <div *ngFor="let handset of handsets" class="mb-[40px] w-[220px] h-[370px]">
+    <div class="text-[24px] font-bold mt-[40px] mb-[10px] text-[#333]">
+      {{ handset.subGroupModel }}
+    </div>
+    <div class="grid grid-flow-col gap-2">
+      <div *ngFor="let variant of handset.variants"
+        class="border-[2px] rounded-[8px] p-[16px] text-center cursor-pointer"
+        [ngClass]="{
+          'border-[#8bc540] bg-[#8bc540] bg-opacity-30': selectedHandset === variant
+        }"
+        (click)="selectHandset(variant)">
+        
+        <div class="text-[18px] font-bold mb-2 px-[16px]">{{ variant.commercialName }}</div>
+
+        <img [src]="variant.thumbnail || '../../assets/icon/image.png'"
+          class="w-full h-[150px] object-contain mx-auto mb-[24px]"
+          (error)="onImageError($event)" />
+
+        <div class="flex justify-center">
+          <div *ngFor="let color of variant.colors"
+            class="w-[30px] h-[30px] rounded-full"
+            [ngStyle]="{ 'background-color': color }">
+          </div>
+        </div>
+
+        <div class="flex justify-center items-center mb-[24px] gap-1">
+          <div class="w-[40px] h-[40px] rounded-full bg-gray-300"></div>
+          <div class="w-[40px] h-[40px] rounded-full bg-[#055160]"></div>
+          <div class="w-[40px] h-[40px] rounded-full bg-[#2b2f32]"></div>
+          <div class="w-[40px] h-[40px] rounded-full bg-yellow-400"></div>
+        </div>
+
+        <span>ราคา </span>
+        <span class="font-bold text-[18px]">{{ variant.detail[0]?.priceInclVat || '-' }}</span>
+        <span> บาท</span>
+      </div>
+    </div>
+  </div>
+</main>
