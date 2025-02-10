@@ -4,7 +4,6 @@ import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-handset-model-list',
   standalone: false,
-  
   templateUrl: './handset-model-list.component.html',
   styleUrl: './handset-model-list.component.css'
 })

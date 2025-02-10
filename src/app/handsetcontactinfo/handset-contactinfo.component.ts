@@ -5,7 +5,7 @@ import { SelectedProductService } from '../services/select-product.service';
   selector: 'app-handsetcontactinfo',
   standalone: false,
   templateUrl: './handset-contactinfo.component.html',
-  styleUrls: ['./handset-contactinfo.component.css']
+  styleUrl: './handset-contactinfo.component.css'
 })
 export class HandsetcontactinfoComponent implements OnInit {
   selectedProduct: any = null;

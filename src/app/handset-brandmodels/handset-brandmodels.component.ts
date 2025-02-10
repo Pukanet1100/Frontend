@@ -5,7 +5,7 @@ import { ApiService } from '../services/api.service';
   selector: 'app-handset-brandmodels',
   standalone: false,
   templateUrl: './handset-brandmodels.component.html',
-  styleUrls: ['./handset-brandmodels.component.css'],
+  styleUrl: './handset-brandmodels.component.css',
 })
 export class HandsetBrandmodelsComponent implements OnInit {
   brands: any[] = [];

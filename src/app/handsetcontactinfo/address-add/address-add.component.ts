@@ -4,7 +4,6 @@ import { AddressService } from '../../services/address.service';
 @Component({
   selector: 'app-address-add',
   standalone: false,
-  
   templateUrl: './address-add.component.html',
   styleUrls: ['./address-add.component.css']
 })
@@ -14,6 +13,7 @@ export class AddressAddComponent implements OnInit {
   provinces: string[] = [];
   amphoes: string[] = [];
   districts: string[] = [];
+  errorMessages: string[] = [];
   
   address = {
     houseNumber: '',
@@ -62,15 +62,28 @@ export class AddressAddComponent implements OnInit {
   }
 
   saveAddress() {
-    if (this.address.houseNumber.trim() === '' || 
-        this.address.province.trim() === '' ||
-        this.address.district.trim() === '' ||
-        this.address.subDistrict.trim() === '' ||
-        this.address.postalCode.trim() === '') {
-      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    this.errorMessages = [];
+    if (this.address.houseNumber.trim() === '') {
+      this.errorMessages.push('กรุณากรอกบ้านเลขที่');
+    }
+    if (this.address.province.trim() === '') {
+      this.errorMessages.push('กรุณาเลือกจังหวัด');
+    }
+    if (this.address.district.trim() === '') {
+      this.errorMessages.push('กรุณาเลือกเขต/อำเภอ');
+    }
+    if (this.address.subDistrict.trim() === '') {
+      this.errorMessages.push('กรุณาเลือกแขวง/ตำบล');
+    }
+    if (this.address.postalCode.trim() === '') {
+      this.errorMessages.push('กรุณากรอกรหัสไปรษณีย์');
+    }
+
+    if (this.errorMessages.length > 0) {
+      this.isPopupVisible = true;
       return;
     }
-    this.isPopupVisible = true;
+
     this.addressService.addAddress({ ...this.address });
   }
 

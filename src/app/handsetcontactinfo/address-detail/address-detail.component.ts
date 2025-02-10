@@ -4,7 +4,6 @@ import { AddressService } from '../../services/address.service';
 @Component({
   selector: 'app-address-detail',
   standalone: false,
-  
   templateUrl: './address-detail.component.html',
   styleUrl: './address-detail.component.css'
 })
