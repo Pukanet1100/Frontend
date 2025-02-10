@@ -4,20 +4,34 @@
       <tr>
         <th class="px-4 py-2 border border-gray-300">บ้านเลขที่</th>
         <th class="px-4 py-2 border border-gray-300">หมู่ที่</th>
+        <th class="px-4 py-2 border border-gray-300">หมู่บ้าน</th>
+        <th class="px-4 py-2 border border-gray-300">ชื่ออาคาร</th>
+        <th class="px-4 py-2 border border-gray-300">ชั้น</th>
+        <th class="px-4 py-2 border border-gray-300">ซอย</th>
+        <th class="px-4 py-2 border border-gray-300">ถนน</th>
         <th class="px-4 py-2 border border-gray-300">ตำบล/แขวง</th>
         <th class="px-4 py-2 border border-gray-300">อำเภอ/เขต</th>
         <th class="px-4 py-2 border border-gray-300">จังหวัด</th>
         <th class="px-4 py-2 border border-gray-300">รหัสไปรษณีย์</th>
+        <th class="px-4 py-2 border border-gray-300">อีเมล</th>
+        <th class="px-4 py-2 border border-gray-300">เบอร์โทรติดต่อ</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let address of addresses" class="hover:bg-gray-50">
         <td class="px-4 py-2 border border-gray-300">{{ address.houseNumber }}</td>
         <td class="px-4 py-2 border border-gray-300">{{ address.villageNumber }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.village }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.building }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.floor }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.alley }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.road }}</td>
         <td class="px-4 py-2 border border-gray-300">{{ address.subDistrict }}</td>
         <td class="px-4 py-2 border border-gray-300">{{ address.district }}</td>
         <td class="px-4 py-2 border border-gray-300">{{ address.province }}</td>
         <td class="px-4 py-2 border border-gray-300">{{ address.postalCode }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.email }}</td>
+        <td class="px-4 py-2 border border-gray-300">{{ address.tel }}</td>
       </tr>
     </tbody>
   </table>

@@ -18,7 +18,7 @@
 
             <div class="col-span-1">
                 <label class="block text-sm font-medium text-gray-700">หมู่บ้าน</label>
-                <input type="text"
+                <input type="text" [(ngModel)]="address.village"
                     class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                     placeholder="ชื่อหมู่บ้าน">
             </div>
@@ -27,14 +27,14 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700">ชื่ออาคาร</label>
-                <input type="text"
+                <input type="text" [(ngModel)]="address.building"
                     class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                     placeholder="ชื่ออาคาร">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">ชั้น</label>
-                <input type="text"
+                <input type="text" [(ngModel)]="address.floor"
                     class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                     placeholder="ชั้น">
             </div>
@@ -42,13 +42,15 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700">ซอย</label>
-            <input type="text" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+            <input type="text" [(ngModel)]="address.alley"
+                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                 placeholder="ซอย">
         </div>
 
         <div>
             <label class="block text-sm font-medium text-gray-700">ถนน</label>
-            <input type="text" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+            <input type="text" [(ngModel)]="address.road"
+                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                 placeholder="ถนน">
         </div>
 
@@ -92,13 +94,16 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700">อีเมล</label>
-            <input type="email" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+            <input type="email" [(ngModel)]="address.email"
+                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                 placeholder="boss@boss.com">
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700">เบอร์โทรติดต่อ</label>
-            <input type="tel" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+            <label class="block text-sm font-medium text-gray-700">เบอร์โทรติดต่อ<span class="text-red-600 font-bold">
+                *</span></label>
+            <input type="tel" [(ngModel)]="address.tel" maxlength="10" required
+                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                 placeholder="0800000001">
         </div>
 

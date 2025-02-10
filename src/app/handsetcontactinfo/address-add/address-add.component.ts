@@ -15,17 +15,24 @@ export class AddressAddComponent implements OnInit {
   amphoes: string[] = [];
   districts: string[] = [];
   errorMessages: string[] = [];
-  
+
   address = {
     houseNumber: '',
     villageNumber: '',
+    village: '',
+    building: '',
+    floor: '',
+    alley: '',
+    road: '',
     subDistrict: '',
     district: '',
     province: '',
-    postalCode: ''
+    postalCode: '',
+    email: '',
+    tel: ''
   };
 
-  constructor(private addressService: AddressService) {}
+  constructor(private addressService: AddressService) { }
 
   ngOnInit(): void {
     this.addressService.getAddressData().subscribe((data) => {
@@ -79,22 +86,32 @@ export class AddressAddComponent implements OnInit {
     if (this.address.postalCode.trim() === '') {
       this.errorMessages.push('กรุณากรอกรหัสไปรษณีย์');
     }
+    if (this.address.email.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.address.email)) {
+      this.errorMessages.push('กรุณากรอกอีเมลให้ถูกต้อง');
+    }
+    if (this.address.tel.trim() === '') {
+      this.errorMessages.push('กรุณากรอกเบอร์โทรศัพท์');
+    } else if (!/^\d{10,}$/.test(this.address.tel)) {
+      this.errorMessages.push('เบอร์โทรศัพท์ต้องมีอย่างน้อย 10 ตัวเลข');
+    }
+    
 
-    if (this.errorMessages.length > 0) {
-      this.isPopupVisible = true;
-      return;
+      if (this.errorMessages.length > 0) {
+        this.isPopupVisible = true;
+        return;
+      }
+
+      this.addressService.addAddress({ ...this.address });
+
+      this.isSuccessPopupVisible = true;
     }
 
-    this.addressService.addAddress({ ...this.address });
+    closePopup() {
+      this.isPopupVisible = false;
+    }
 
-    this.isSuccessPopupVisible = true;
-  }
+    closeSuccessPopup() {
+      this.isSuccessPopupVisible = false;
+    }
 
-  closePopup() {
-    this.isPopupVisible = false;
   }
-  
-  closeSuccessPopup() {
-    this.isSuccessPopupVisible = false;
-  }
-}
