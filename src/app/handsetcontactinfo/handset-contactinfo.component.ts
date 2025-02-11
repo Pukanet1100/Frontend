@@ -10,7 +10,7 @@ import { SelectedProductService } from '../services/select-product.service';
 export class HandsetcontactinfoComponent implements OnInit {
   selectedProduct: any = null;
   selectedColor: string = '';
-  selectedComponent: string = '';
+  selectedComponent: string = 'add';
 
   constructor(private selectedProductService: SelectedProductService) {}
 

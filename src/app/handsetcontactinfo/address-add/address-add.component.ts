@@ -5,7 +5,7 @@ import { AddressService } from '../../services/address.service';
   selector: 'app-address-add',
   standalone: false,
   templateUrl: './address-add.component.html',
-  styleUrls: ['./address-add.component.css']
+  styleUrl: './address-add.component.css'
 })
 export class AddressAddComponent implements OnInit {
   isPopupVisible: boolean = false;
@@ -69,49 +69,59 @@ export class AddressAddComponent implements OnInit {
     this.address.postalCode = selected ? selected.zipcode.toString() : '';
   }
 
-  saveAddress() {
-    this.errorMessages = [];
-    if (this.address.houseNumber.trim() === '') {
-      this.errorMessages.push('กรุณากรอกบ้านเลขที่');
-    }
-    if (this.address.province.trim() === '') {
-      this.errorMessages.push('กรุณาเลือกจังหวัด');
-    }
-    if (this.address.district.trim() === '') {
-      this.errorMessages.push('กรุณาเลือกเขต/อำเภอ');
-    }
-    if (this.address.subDistrict.trim() === '') {
-      this.errorMessages.push('กรุณาเลือกแขวง/ตำบล');
-    }
-    if (this.address.postalCode.trim() === '') {
-      this.errorMessages.push('กรุณากรอกรหัสไปรษณีย์');
-    }
-    if (this.address.email.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.address.email)) {
-      this.errorMessages.push('กรุณากรอกอีเมลให้ถูกต้อง');
-    }
-    if (this.address.tel.trim() === '') {
-      this.errorMessages.push('กรุณากรอกเบอร์โทรศัพท์');
-    } else if (!/^\d{10,}$/.test(this.address.tel)) {
-      this.errorMessages.push('เบอร์โทรศัพท์ต้องมีอย่างน้อย 10 ตัวเลข');
-    }
-    
-
-      if (this.errorMessages.length > 0) {
-        this.isPopupVisible = true;
-        return;
-      }
-
-      this.addressService.addAddress({ ...this.address });
-
-      this.isSuccessPopupVisible = true;
-    }
-
-    closePopup() {
-      this.isPopupVisible = false;
-    }
-
-    closeSuccessPopup() {
-      this.isSuccessPopupVisible = false;
-    }
-
+  isFormInvalid(): boolean {
+    return !this.address.houseNumber.trim() ||
+      !this.address.province.trim() ||
+      !this.address.district.trim() ||
+      !this.address.subDistrict.trim() ||
+      !this.address.postalCode.trim() ||
+      !this.isTelValid() ||
+      !this.isEmailValid();
   }
+
+  isEmailValid(): boolean {
+    return this.address.email.trim() === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.address.email);
+  }
+
+  isTelValid(): boolean {
+    return this.address.tel.trim() !== '' && /^\d{10,}$/.test(this.address.tel);
+  }
+
+  saveAddress() {
+    this.isPopupVisible = false;
+    if (this.isFormInvalid()) {
+      if (!this.address.houseNumber.trim()) {
+        this.isPopupVisible = true;
+      }
+      if (!this.address.province.trim()) {
+        this.isPopupVisible = true;
+      }
+      if (!this.address.district.trim()) {
+        this.isPopupVisible = true;
+      }
+      if (!this.address.subDistrict.trim()) {
+        this.isPopupVisible = true;
+      }
+      if (!this.address.postalCode.trim()) {
+        this.isPopupVisible = true;
+      }
+      if (!this.isTelValid()) {
+        this.isPopupVisible = true;
+      }
+      if (!this.isEmailValid()) {
+        this.isPopupVisible = true;
+      }
+      return;
+    }
+  
+    this.addressService.addAddress({ ...this.address });
+    document.documentElement.style.overflow = 'hidden';
+    this.isSuccessPopupVisible = true;
+  }
+
+
+  closeSuccessPopup() {
+    this.isSuccessPopupVisible = false;
+    document.body.style.overflow = 'auto';
+  }
+}
