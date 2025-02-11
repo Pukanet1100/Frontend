@@ -13,7 +13,6 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private addressService: AddressService
   ) { }
 
   ngOnInit() {
@@ -25,13 +24,6 @@ export class NavbarComponent implements OnInit {
       } else {
         this.headername = 'รายการสินค้า';
       }
-    });
-  }
-
-  goHome() {
-    this.addressService.clearAddresses();
-    this.router.navigate(['/main-menu']).then(() => {
-      window.location.reload();
     });
   }
 }

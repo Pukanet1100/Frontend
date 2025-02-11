@@ -1,40 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddressService {
+  private apiUrl = 'http://localhost:3000/addresses'; 
   private dataUrl = 'assets/data/raw_database.json';
   private addressesSubject = new BehaviorSubject<any[]>(this.loadAddressesFromLocalStorage());
   addresses$ = this.addressesSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadAddresses();
+  }
 
-  addAddress(address: any) {
-    const currentAddresses = this.addressesSubject.getValue();
-    const updatedAddresses = [...currentAddresses, address];
+  private loadAddresses() {
+    this.http.get<any[]>(this.apiUrl).subscribe(data => {
+      this.addressesSubject.next(data);
+    });
+  }
 
-    this.addressesSubject.next(updatedAddresses);
-    this.saveAddressesToLocalStorage(updatedAddresses);
+  addAddress(address: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, address).pipe(
+      tap(() => {
+        this.loadAddresses();
+      }),
+      catchError((error) => {
+        console.error('Error adding address:', error);
+        return of(null);
+      })
+    );
   }
 
   getAddressData(): Observable<any[]> {
     return this.http.get<any[]>(this.dataUrl);
   }
 
-  private saveAddressesToLocalStorage(addresses: any[]) {
-    localStorage.setItem('addresses', JSON.stringify(addresses));
-  }
-
   private loadAddressesFromLocalStorage(): any[] {
     const savedAddresses = localStorage.getItem('addresses');
     return savedAddresses ? JSON.parse(savedAddresses) : [];
-  }
-
-  clearAddresses() {
-    this.addressesSubject.next([]);
-    localStorage.removeItem('addresses'); 
   }
 }

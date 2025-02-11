@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddressService } from '../../services/address.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-address-add',
@@ -15,6 +16,7 @@ export class AddressAddComponent implements OnInit {
   amphoes: string[] = [];
   districts: string[] = [];
   errorMessages: string[] = [];
+  addressForm: FormGroup;
 
   address = {
     houseNumber: '',
@@ -32,7 +34,31 @@ export class AddressAddComponent implements OnInit {
     tel: ''
   };
 
-  constructor(private addressService: AddressService) { }
+  constructor(private fb: FormBuilder, private addressService: AddressService) {
+    this.addressForm = this.fb.group({
+      houseNumber: [''],
+      villageNumber: [''],
+      village: [''],
+      building: [''],
+      floor: [''],
+      alley: [''],
+      road: [''],
+      subDistrict: [''],
+      district: [''],
+      province: [''],
+      postalCode: [''],
+      email: [''],
+      tel: ['']
+    });
+  }
+
+  addAddress() {
+    if (this.addressForm.valid) {
+      this.addressService.addAddress(this.addressForm.value).subscribe(() => {
+        this.addressForm.reset();
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.addressService.getAddressData().subscribe((data) => {
@@ -114,11 +140,17 @@ export class AddressAddComponent implements OnInit {
       return;
     }
   
-    this.addressService.addAddress({ ...this.address });
-    document.documentElement.style.overflow = 'hidden';
-    this.isSuccessPopupVisible = true;
+    this.addressService.addAddress({ ...this.address }).subscribe(
+      (response) => {
+        console.log('บันทึกสำเร็จ:', response);
+        this.isSuccessPopupVisible = true;
+        document.documentElement.style.overflow = 'hidden';
+      },
+      (error) => {
+        console.error('เกิดข้อผิดพลาด:', error);
+      }
+    );
   }
-
 
   closeSuccessPopup() {
     this.isSuccessPopupVisible = false;
