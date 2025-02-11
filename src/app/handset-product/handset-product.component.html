@@ -17,19 +17,14 @@
           class="w-full h-[150px] object-contain mx-auto mb-[24px]"
           (error)="onImageError($event)" />
 
-        <div class="flex justify-center">
-          <div *ngFor="let color of variant.colors"
-            class="w-[30px] h-[30px] rounded-full"
-            [ngStyle]="{ 'background-color': color }">
+        <div class="flex justify-center space-x-2 pb-[20px]">
+          <div *ngFor="let color of variant.colors" class="flex flex-col items-center">
+            <div class="w-[35px] h-[35px] rounded-full border border-gray-400"
+              [ngStyle]="{ 'background-color': color.code }">
+            </div>
+            <span class="text-xs mt-1">{{ color.name }}</span>
           </div>
-        </div>
-
-        <div class="flex justify-center items-center mb-[24px] gap-1">
-          <div class="w-[40px] h-[40px] rounded-full bg-gray-300"></div>
-          <div class="w-[40px] h-[40px] rounded-full bg-[#055160]"></div>
-          <div class="w-[40px] h-[40px] rounded-full bg-[#2b2f32]"></div>
-          <div class="w-[40px] h-[40px] rounded-full bg-yellow-400"></div>
-        </div>
+        </div>        
 
         <span>ราคา </span>
         <span class="font-bold text-[18px]">{{ variant.detail[0]?.priceInclVat || '-' }}</span>

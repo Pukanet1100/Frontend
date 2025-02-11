@@ -11,23 +11,21 @@
         <div>
           <span>เลือกสี</span>
           <div class="flex justify-between mt-[30px] w-full">
-            <div *ngFor="let color of ['silver', 'blue', 'graphite', 'gold']"
+            <div *ngFor="let color of colorOptions" 
               class="flex flex-col items-center justify-center cursor-pointer w-full">
-              <div class="w-[58px] h-[58px] mb-[10px] rounded-full border-[6px] border-gray-200" [ngClass]="{
-                            'bg-gray-300': color === 'silver',
-                            'bg-[#055160]': color ===  'blue',
-                            'bg-[#2b2f32]': color === 'graphite',
-                            'bg-yellow-400': color === 'gold',
-                            'ring-[4px] ring-[#8bc540]': selectedColor === color
-                          }" (click)="selectColor(color)">
+              <div class="w-[58px] h-[58px] mb-[10px] rounded-full border-[6px] border-gray-200" 
+                [ngStyle]="{'background-color': '#' + color.colorCode}" 
+                [ngClass]="{'ring-[4px] ring-[#8bc540]': selectedColor === color.colorName}"
+                (click)="selectColor(color.colorName)">
               </div>
-              <span class="mt-2">{{ color | uppercase }}</span>
+              <span class="mt-2">{{ color.colorName }}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  
 
   <div class="mt-[30px]">
     <div class="flex space-x-4">

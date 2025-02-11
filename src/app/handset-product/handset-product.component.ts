@@ -12,13 +12,25 @@ export class HandsetProductComponent implements OnChanges {
   @Output() productSelected = new EventEmitter<boolean>();
   selectedHandset: any = null;
 
-  constructor(private selectedProductService: SelectedProductService) {}
+  constructor(private selectedProductService: SelectedProductService) { }
 
   ngOnChanges(): void {
     if (this.handsets) {
       if (!Array.isArray(this.handsets)) {
         this.handsets = [this.handsets];
       }
+
+      this.handsets.forEach((handset: any) => {
+        handset.variants.forEach((variant: any) => {
+          if (Array.isArray(variant.detail) && variant.detail.length > 0) {
+            variant.colors = variant.detail.map((item: any) => ({
+              code: `#${item.colorCode}`
+            }));
+          } else {
+            variant.colors = [];
+          }
+        });
+      });
     }
   }
 

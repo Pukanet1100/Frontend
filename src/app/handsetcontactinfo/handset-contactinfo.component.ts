@@ -10,30 +10,41 @@ import { SelectedProductService } from '../services/select-product.service';
 export class HandsetcontactinfoComponent implements OnInit {
   selectedProduct: any = null;
   selectedColor: string = '';
+  colorOptions: any[] = [];
   selectedComponent: string = 'add';
 
   constructor(private selectedProductService: SelectedProductService) {}
 
   ngOnInit() {
     this.selectedProduct = this.selectedProductService.getSelectedProduct();
-    this.selectedColor = localStorage.getItem('selectedColor') || 'silver';
+    
+    if (this.selectedProduct) {
+      this.colorOptions = this.selectedProduct.detail || [];
+      this.selectedColor = localStorage.getItem('selectedColor') || this.colorOptions[0]?.colorName || '';
+      this.updateImage();
+    }
   }
 
-  selectColor(color: string) {
-    this.selectedColor = color;
-    localStorage.setItem('selectedColor', color);
+  selectColor(colorName: string) {
+    this.selectedColor = colorName;
+    localStorage.setItem('selectedColor', colorName);
+    this.updateImage();
   }
 
-  selectProduct(product: any): void {
-    this.selectedProductService.setSelectedProduct(product);
-    this.selectedProduct = product;
+  updateImage() {
+    if (this.selectedProduct) {
+      const selectedDetail = this.colorOptions.find(color => color.colorName === this.selectedColor);
+      this.selectedProduct.thumbnail = selectedDetail?.images[0]?.imageUrl || '../../assets/icon/image.png';
+    }
   }
-  
+
   selectComponent(component: string) {
     this.selectedComponent = component;
   }
+
 
   onImageError(event: any) {
     event.target.src = '../../assets/icon/image.png';
   }
 }
+
