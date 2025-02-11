@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-
   private apiUrlbrands = 'http://localhost:3000/brands';
   private apiUrlhandset = 'http://localhost:3000/handset';
 
@@ -18,5 +17,9 @@ export class ApiService {
 
   getHandset(brand: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrlhandset}?brand=${brand}`);
+  }
+
+  searchHandset(searchTerm: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrlhandset}?commercialName_like=${searchTerm}`);
   }
 }
