@@ -10,6 +10,7 @@ import { ApiService } from '../services/api.service';
 export class HandsetModelListComponent implements OnChanges {
   @Input() selectedBrand: string = '';
   @Output() handsetSelected = new EventEmitter<any>();
+  noHandsetsAvailable = false;
   handsets: any[] = [];
   filteredHandsets: any[] = [];
   selectedHandset: any = null;
@@ -33,6 +34,7 @@ export class HandsetModelListComponent implements OnChanges {
 
         this.handsets = Object.values(groupedHandsets);
         this.filteredHandsets = this.handsets;
+        this.noHandsetsAvailable = this.handsets.length === 0;
       });
     }
   }
@@ -49,4 +51,8 @@ export class HandsetModelListComponent implements OnChanges {
     this.selectedHandset = handset;
     this.handsetSelected.emit(handset);
   }
-}
+
+  onNoHandsets(noHandsets: boolean) {
+    this.noHandsetsAvailable = noHandsets;
+  }
+} 
