@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -8,6 +8,9 @@ import { ApiService } from '../services/api.service';
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
+  @Output() handsetSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() searchCleared: EventEmitter<void> = new EventEmitter<void>();
+
   selectedHandset: string = '';
   handsets: any[] = [];
   showDropdown: boolean = false;
@@ -17,7 +20,7 @@ export class SearchComponent {
 
   onSearch(): void {
     clearTimeout(this.searchTimeout);
-  
+
     this.searchTimeout = setTimeout(() => {
       if (this.selectedHandset.trim()) {
         this.apiService.searchHandset(this.selectedHandset).subscribe((data) => {
@@ -25,18 +28,20 @@ export class SearchComponent {
           this.handsets = data.filter((handset: any) =>
             handset.commercialName.toLowerCase().includes(query)
           );
-  
+
           this.showDropdown = this.handsets.length > 0;
         });
       } else {
         this.handsets = [];
         this.showDropdown = false;
+        this.searchCleared.emit();
       }
     }, 800);
   }
-  
+
   selectHandset(handset: any): void {
     this.selectedHandset = handset.commercialName;
     this.showDropdown = false;
+    this.handsetSelected.emit(handset);
   }
 }

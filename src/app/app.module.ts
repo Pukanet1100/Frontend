@@ -9,11 +9,10 @@ import { NavbarModule } from './navbar/navbar.module';
 import { MainMenuModule } from './main-menu/main-menu.module';
 import { HandsetcontactinfoModule } from './handsetcontactinfo/handset-contactinfo.module';
 import { HttpClientModule } from '@angular/common/http';
-import { HandsetProductComponent } from './handset-product/handset-product.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

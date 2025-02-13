@@ -8,6 +8,7 @@ import { HandsetBrandmodelsModule } from '../handset-brandmodels/handset-brandmo
 import { SearchModule } from '../search/search.module';
 import { HandsetProductModule } from '../handset-product/handset-product.module';
 import { RouterModule } from '@angular/router';
+import { ProductSearchModule } from "../product-search/product-search.module";
 
 @NgModule({
   declarations: [MainMenuComponent],
@@ -20,7 +21,7 @@ import { RouterModule } from '@angular/router';
     HandsetBrandmodelsModule,
     HandsetProductModule,
     SearchModule,
-    
-  ],
+    ProductSearchModule
+],
 })
 export class MainMenuModule {}

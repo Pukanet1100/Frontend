@@ -9,6 +9,8 @@ export class ApiService {
   private apiUrlbrands = 'http://localhost:3000/brands';
   private apiUrlhandset = 'http://localhost:3000/handset';
 
+  private selectedHandset: any;
+
   constructor(private http: HttpClient) { }
 
   getBrands(): Observable<any[]> {
@@ -21,5 +23,13 @@ export class ApiService {
 
   searchHandset(searchTerm: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrlhandset}?commercialName_like=${searchTerm}`);
+  }
+
+  setSelectedHandset(handset: any): void {
+    this.selectedHandset = handset;
+  }
+
+  getSelectedHandset(): any {
+    return this.selectedHandset;
   }
 }
