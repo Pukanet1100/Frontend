@@ -36,6 +36,11 @@ export class HandsetModelListComponent implements OnChanges {
         this.filteredHandsets = this.handsets;
         this.noHandsetsAvailable = this.handsets.length === 0;
       });
+    } else {
+      this.handsets = [];
+      this.filteredHandsets = [];
+      this.selectedHandset = null;
+      this.noHandsetsAvailable = false;
     }
   }
 
@@ -55,4 +60,4 @@ export class HandsetModelListComponent implements OnChanges {
   onNoHandsets(noHandsets: boolean) {
     this.noHandsetsAvailable = noHandsets;
   }
-} 
+}
