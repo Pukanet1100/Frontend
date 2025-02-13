@@ -29,6 +29,11 @@ export class MainMenuComponent {
   isHandsetSelected(selected: boolean) {
     this.isSelected = selected;
   }
+
+  onProductSelected(selected: boolean) {
+    this.isSelected = selected;
+  }
+
   onSearchCleared(): void {
     this.isSearchMode = false;
   }

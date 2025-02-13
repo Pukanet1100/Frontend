@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-product-search',
@@ -8,19 +8,25 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 })
 export class ProductSearchComponent {
   @Input() selectedHandset: any;
-  isSelected = false;
+  @Output() productSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isSelected: boolean = false; 
   selectedColorIndex: number | null = null;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedHandset'] && this.selectedHandset) {
-      if (Array.isArray(this.selectedHandset)) {
-        console.log('selectedHandset is an array:', this.selectedHandset);
-      }
+      this.selectedColorIndex = null;
+      this.isSelected = false;
+      this.productSelected.emit(false);
     }
   }
 
   toggleSelect() {
     this.isSelected = !this.isSelected;
+    this.productSelected.emit(this.isSelected);
+  }
+
+  selectColor(index: number) {
+    this.selectedColorIndex = index;
   }
 
   onImageError(event: any) {
@@ -28,6 +34,6 @@ export class ProductSearchComponent {
   }
 
   getPrice() {
-    return this.selectedHandset?.detail?.[0]?.priceInclVat || '-';
+    return this.selectedHandset?.detail?.[this.selectedColorIndex || 0]?.priceInclVat || '-';
   }
 }

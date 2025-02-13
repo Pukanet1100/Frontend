@@ -26,7 +26,7 @@
 <app-handset-brandmodels *ngIf="!isSearchMode" (brandSelected)="onBrandSelected($event)"></app-handset-brandmodels>
 <app-handset-model-list *ngIf="!isSearchMode" [selectedBrand]="selectedBrand" (handsetSelected)="onHandsetSelected($event)"></app-handset-model-list>
 
-<app-product-search *ngIf="isSearchMode" [selectedHandset]="selectedHandset"></app-product-search>
+<app-product-search *ngIf="isSearchMode" [selectedHandset]="selectedHandset" (productSelected)="onProductSelected($event)"></app-product-search>
 
 <app-handset-product *ngIf="!isSearchMode" [handsets]="selectedHandset" (productSelected)="isHandsetSelected($event)"></app-handset-product>
 
