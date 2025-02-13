@@ -53,8 +53,13 @@ export class HandsetModelListComponent implements OnChanges {
   }
 
   selectHandset(handset: any) {
-    this.selectedHandset = handset;
-    this.handsetSelected.emit(handset);
+    if (this.selectedHandset === handset) {
+      this.selectedHandset = null;
+      this.handsetSelected.emit(null);
+    } else {
+      this.selectedHandset = handset;
+      this.handsetSelected.emit(handset);
+    }
   }
 
   onNoHandsets(noHandsets: boolean) {
