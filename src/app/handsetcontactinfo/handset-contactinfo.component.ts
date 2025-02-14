@@ -42,9 +42,12 @@ export class HandsetcontactinfoComponent implements OnInit {
     this.selectedComponent = component;
   }
 
-
   onImageError(event: any) {
     event.target.src = '../../assets/icon/image.png';
   }
-}
 
+  getColorCode(color: any): string {
+    const colorCode = color.colorCode;
+    return colorCode.startsWith('#') ? colorCode : `#${colorCode}`;
+  }
+}
