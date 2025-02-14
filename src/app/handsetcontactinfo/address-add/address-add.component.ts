@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddressService } from '../../services/address.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-address-add',
@@ -15,49 +15,28 @@ export class AddressAddComponent implements OnInit {
   provinces: string[] = [];
   amphoes: string[] = [];
   districts: string[] = [];
-  errorMessages: string[] = [];
   addressForm: FormGroup;
-
-  address = {
-    houseNumber: '',
-    villageNumber: '',
-    village: '',
-    building: '',
-    floor: '',
-    alley: '',
-    road: '',
-    subDistrict: '',
-    district: '',
-    province: '',
-    postalCode: '',
-    email: '',
-    tel: ''
-  };
 
   constructor(private fb: FormBuilder, private addressService: AddressService) {
     this.addressForm = this.fb.group({
-      houseNumber: [''],
+      houseNumber: ['', Validators.required],
       villageNumber: [''],
       village: [''],
       building: [''],
       floor: [''],
       alley: [''],
       road: [''],
-      subDistrict: [''],
-      district: [''],
-      province: [''],
-      postalCode: [''],
-      email: [''],
-      tel: ['']
+      subDistrict: ['', Validators.required],
+      district: ['', Validators.required],
+      province: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      email: ['', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/)]],
+      tel: ['', [
+        Validators.required, 
+        Validators.pattern(/^[0-9]{10}$/)]],
     });
-  }
-
-  addAddress() {
-    if (this.addressForm.valid) {
-      this.addressService.addAddress(this.addressForm.value).subscribe(() => {
-        this.addressForm.reset();
-      });
-    }
   }
 
   ngOnInit() {
@@ -68,89 +47,42 @@ export class AddressAddComponent implements OnInit {
   }
 
   onProvinceChange() {
-    this.amphoes = [...new Set(this.addressData
-      .filter(item => item.province === this.address.province)
-      .map(item => item.amphoe)
-    )];
-    this.address.district = '';
-    this.address.subDistrict = '';
-    this.address.postalCode = '';
+    const province = this.addressForm.get('province')?.value;
+    this.amphoes = [...new Set(this.addressData.filter(item => item.province === province).map(item => item.amphoe))];
+    this.addressForm.patchValue({ district: '', subDistrict: '', postalCode: '' });
   }
 
   onAmphoeChange() {
-    this.districts = [...new Set(this.addressData
-      .filter(item => item.province === this.address.province && item.amphoe === this.address.district)
-      .map(item => item.district)
-    )];
-    this.address.subDistrict = '';
-    this.address.postalCode = '';
+    const { province, district } = this.addressForm.value;
+    this.districts = [...new Set(this.addressData.filter(item => item.province === province && item.amphoe === district).map(item => item.district))];
+    this.addressForm.patchValue({ subDistrict: '', postalCode: '' });
   }
 
   onDistrictChange() {
-    const selected = this.addressData.find(item =>
-      item.province === this.address.province &&
-      item.amphoe === this.address.district &&
-      item.district === this.address.subDistrict
-    );
-    this.address.postalCode = selected ? selected.zipcode.toString() : '';
-  }
-
-  isFormInvalid(): boolean {
-    return !this.address.houseNumber.trim() ||
-      !this.address.province.trim() ||
-      !this.address.district.trim() ||
-      !this.address.subDistrict.trim() ||
-      !this.address.postalCode.trim() ||
-      !this.isTelValid() ||
-      !this.isEmailValid();
-  }
-
-  isEmailValid(): boolean {
-    return this.address.email.trim() === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.address.email);
-  }
-
-  isTelValid(): boolean {
-    return this.address.tel.trim() !== '' && /^\d{10,}$/.test(this.address.tel);
+    const { province, district, subDistrict } = this.addressForm.value;
+    const selected = this.addressData.find(item => item.province === province && item.amphoe === district && item.district === subDistrict);
+    this.addressForm.patchValue({ postalCode: selected ? selected.zipcode.toString() : '' });
   }
 
   saveAddress() {
-    this.isPopupVisible = false;
-    if (this.isFormInvalid()) {
-      if (!this.address.houseNumber.trim()) {
-        this.isPopupVisible = true;
-      }
-      if (!this.address.province.trim()) {
-        this.isPopupVisible = true;
-      }
-      if (!this.address.district.trim()) {
-        this.isPopupVisible = true;
-      }
-      if (!this.address.subDistrict.trim()) {
-        this.isPopupVisible = true;
-      }
-      if (!this.address.postalCode.trim()) {
-        this.isPopupVisible = true;
-      }
-      if (!this.isTelValid()) {
-        this.isPopupVisible = true;
-      }
-      if (!this.isEmailValid()) {
-        this.isPopupVisible = true;
-      }
+    if (this.addressForm.invalid) {
+      this.isPopupVisible = true;
       return;
     }
-  
-    this.addressService.addAddress({ ...this.address }).subscribe(
-      (response) => {
-        console.log('บันทึกสำเร็จ:', response);
+    this.isSuccessPopupVisible = false;
+    this.addressService.addAddress(this.addressForm.value).subscribe(
+      () => {
         this.isSuccessPopupVisible = true;
         document.documentElement.style.overflow = 'hidden';
+        this.addressForm.reset();
       },
-      (error) => {
-        console.error('เกิดข้อผิดพลาด:', error);
-      }
     );
   }
+
+  isInvalid(field: string): boolean {
+    return !!(this.addressForm.get(field)?.invalid && (this.addressForm.get(field)?.touched || this.addressForm.get(field)?.dirty));
+  }
+
 
   closeSuccessPopup() {
     this.isSuccessPopupVisible = false;

@@ -1,116 +1,115 @@
 <div class="mx-auto p-8">
-    <div class="space-y-6">
-        <div class="grid grid-cols-3 gap-4">
-            <div class="col-span-1">
-                <label class="block text-sm font-medium text-gray-700">บ้านเลขที่<span class="text-red-600 font-bold">
-                        *</span></label>
-                <input type="text" [(ngModel)]="address.houseNumber"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="0/0">
+    <form [formGroup]="addressForm" (ngSubmit)="saveAddress()">
+        <div class="space-y-6">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700">บ้านเลขที่ <span
+                            class="text-red-600 font-bold">*</span></label>
+                    <input type="text" formControlName="houseNumber"
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="0/0">
+                    <div *ngIf="isInvalid('houseNumber')" class="text-red-600 text-sm">กรุณากรอกบ้านเลขที่</div>
+                </div>
+
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700">หมู่ที่</label>
+                    <input type="text" formControlName="villageNumber"
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="0">
+                </div>
+
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-gray-700">หมู่บ้าน</label>
+                    <input type="text" formControlName="village"
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="หมู่บ้าน">
+                </div>
             </div>
 
-            <div class="col-span-1">
-                <label class="block text-sm font-medium text-gray-700">หมู่ที่</label>
-                <input type="text" [(ngModel)]="address.villageNumber"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="0">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">ชื่ออาคาร</label>
+                    <input type="text" formControlName="building"
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="ชื่ออาคาร">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">ชั้น</label>
+                    <input type="text" formControlName="floor" class="w-full mt-1 p-2 border border-gray-300 rounded-md"
+                        placeholder="ชั้น">
+                </div>
             </div>
 
-            <div class="col-span-1">
-                <label class="block text-sm font-medium text-gray-700">หมู่บ้าน</label>
-                <input type="text" [(ngModel)]="address.village"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="ชื่อหมู่บ้าน">
-            </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700">ชื่ออาคาร</label>
-                <input type="text" [(ngModel)]="address.building"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="ชื่ออาคาร">
+                <label class="block text-sm font-medium text-gray-700">ซอย</label>
+                <input type="text" formControlName="alley" class="w-full mt-1 p-2 border border-gray-300 rounded-md"
+                    placeholder="ซอย">
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700">ชั้น</label>
-                <input type="text" [(ngModel)]="address.floor" class="w-full mt-1 p-2 border border-gray-300 rounded-md"
-                    placeholder="ชั้น">
+                <label class="block text-sm font-medium text-gray-700">ถนน</label>
+                <input type="text" formControlName="road" class="w-full mt-1 p-2 border border-gray-300 rounded-md"
+                    placeholder="ถนน">
             </div>
-        </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700">ซอย</label>
-            <input type="text" [(ngModel)]="address.alley" class="w-full mt-1 p-2 border border-gray-300 rounded-md"
-                placeholder="ซอย">
-        </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">จังหวัด <span
+                        class="text-red-600 font-bold">*</span></label>
+                <select formControlName="province" (change)="onProvinceChange()"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    <option value="" disabled selected>เลือกจังหวัด</option>
+                    <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+                </select>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700">ถนน</label>
-            <input type="text" [(ngModel)]="address.road" class="w-full mt-1 p-2 border border-gray-300 rounded-md"
-                placeholder="ถนน">
-        </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">เขต/อำเภอ <span
+                        class="text-red-600 font-bold">*</span></label>
+                <select formControlName="district" (change)="onAmphoeChange()"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    <option value="" disabled selected>เลือกเขต/อำเภอ</option>
+                    <option *ngFor="let amphoe of amphoes" [value]="amphoe">{{ amphoe }}</option>
+                </select>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700">จังหวัด<span class="text-red-600 font-bold">
-                    *</span></label>
-            <select [(ngModel)]="address.province" (change)="onProvinceChange()"
-                class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                <option value="" disabled selected>เลือกจังหวัด</option>
-                <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
-            </select>
-        </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">แขวง/ตำบล <span
+                        class="text-red-600 font-bold">*</span></label>
+                <select formControlName="subDistrict" (change)="onDistrictChange()"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    <option value="" disabled selected>เลือกแขวง/ตำบล</option>
+                    <option *ngFor="let district of districts" [value]="district">{{ district }}</option>
+                </select>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700">เขต/อำเภอ<span class="text-red-600 font-bold">
-                    *</span></label>
-            <select [(ngModel)]="address.district" (change)="onAmphoeChange()"
-                class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                <option value="" disabled selected>เลือกเขต/อำเภอ</option>
-                <option *ngFor="let amphoe of amphoes" [value]="amphoe">{{ amphoe }}</option>
-            </select>
-        </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">รหัสไปรษณีย์ <span
+                        class="text-red-600 font-bold">*</span></label>
+                <input type="text" formControlName="postalCode"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
+                    placeholder="รหัสไปรษณีย์" readonly>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">อีเมล <span
+                        class="text-red-600 font-bold">*</span></label>
+                <input type="email" formControlName="email" class="w-full mt-1 p-2 border border-gray-300 rounded-md"
+                    placeholder="example@email.com">
+                <div *ngIf="isInvalid('email')" class="text-red-600 text-sm">กรุณากรอกอีเมลให้ถูกต้อง</div>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700">แขวง/ตำบล<span class="text-red-600 font-bold">
-                    *</span></label>
-            <select [(ngModel)]="address.subDistrict" (change)="onDistrictChange()"
-                class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                <option value="" disabled selected>เลือกแขวง/ตำบล</option>
-                <option *ngFor="let district of districts" [value]="district">{{ district }}</option>
-            </select>
-        </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">เบอร์โทรศัพท์ <span
+                        class="text-red-600 font-bold">*</span> </label>
+                <input type="tel" formControlName="tel" maxlength="10"
+                    class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="เบอร์โทรศัพท์">
+                <div *ngIf="isInvalid('tel')" class="text-red-600 text-sm">กรุณากรอกเบอร์โทรศัพท์ 10 หลัก</div>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700">รหัสไปรษณีย์<span class="text-red-600 font-bold">
-                    *</span></label>
-            <input type="text" [(ngModel)]="address.postalCode"
-                class="w-full mt-1 p-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
-                placeholder="รหัสไปรษณีย์" readonly>
-        </div>
-
-        <div>
-            <label for="email" class="block text-gray-700">อีเมล</label>
-            <input type="text" id="email" [(ngModel)]="address.email" class="w-full p-2 border rounded-md"
-                [ngClass]="{'border-red-500': !isEmailValid() && address.email.trim() !== ''}">
-            <p *ngIf="!isEmailValid() && address.email.trim() !== ''" class="text-red-600 text-sm mt-1">
-                กรุณากรอกอีเมลให้ถูกต้อง
-            </p>
-        </div>
-
-        <div class="mt-4">
-            <label for="tel" class="block text-gray-700">เบอร์โทรศัพท์</label>
-            <input type="text" id="tel" [(ngModel)]="address.tel" maxlength="10" class="w-full p-2 border rounded-md"
-                [ngClass]="{'border-red-500': !isTelValid() && address.tel.trim() !== ''}">
-            <p *ngIf="!isTelValid() && address.tel.trim() !== ''" class="text-red-600 text-sm mt-1">
-                กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (อย่างน้อย 10 ตัวเลข)
-            </p>
-        </div>
-
-        <div class="relative">
-            <button type="submit" class="w-full p-3 rounded-md text-white transition 
-                   bg-[#8bc540] hover:bg-[#7db139] 
-                   disabled:bg-[#8bc540] disabled:bg-opacity-60 disabled:cursor-not-allowed" (click)="saveAddress()"
-                [disabled]="isFormInvalid()">
-                บันทึกข้อมูล
-            </button>
-
+            <div class="relative">
+                <button type="submit" class="w-full p-3 rounded-md text-white transition 
+                    bg-[#8bc540] hover:bg-[#7db139] 
+                    disabled:bg-[#8bc540] disabled:bg-opacity-60 disabled:cursor-not-allowed"
+                    [disabled]="!addressForm.valid">
+                    บันทึกข้อมูล
+                </button>
+            </div>
             <div *ngIf="isSuccessPopupVisible"
                 class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                 <div class="bg-white p-6 rounded-md shadow-md w-1/3 text-center">
@@ -127,5 +126,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

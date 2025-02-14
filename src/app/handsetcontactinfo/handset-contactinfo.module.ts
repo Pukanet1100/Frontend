@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HandsetcontactinfoComponent } from './handset-contactinfo.component';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { AddressAddComponent } from './address-add/address-add.component';
     CommonModule,
     BrowserModule,
     RouterModule,
-    FormsModule,
+    ReactiveFormsModule,
     NavbarModule
 ],
 })
