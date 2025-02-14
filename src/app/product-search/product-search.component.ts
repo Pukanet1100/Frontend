@@ -10,12 +10,12 @@ import { SelectedProductService } from '../services/select-product.service';
 export class ProductSearchComponent {
   @Input() selectedHandset: any;
   @Output() productSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
-  isSelected: boolean = false; 
+  isSelected: boolean = false;
   selectedColorIndex: number | null = null;
 
-  constructor(private selectedProductService: SelectedProductService) {}
-  
-  ngOnChanges(changes: SimpleChanges)  {
+  constructor(private selectedProductService: SelectedProductService) { }
+
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedHandset'] && this.selectedHandset) {
       this.selectedColorIndex = null;
       this.isSelected = false;
@@ -24,6 +24,10 @@ export class ProductSearchComponent {
     }
   }
   
+  getColorCode(color: string): string {
+    return color.startsWith("#") ? color : `#${color}`;
+  }
+
   toggleSelect() {
     this.isSelected = !this.isSelected;
     this.productSelected.emit(this.isSelected);
@@ -33,7 +37,7 @@ export class ProductSearchComponent {
       this.selectedProductService.clearSelectedProduct();
     }
   }
-  
+
   selectColor(index: number) {
     this.selectedColorIndex = index;
   }

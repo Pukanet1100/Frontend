@@ -24,7 +24,7 @@ export class HandsetProductComponent implements OnChanges {
         handset.variants.forEach((variant: any) => {
           if (Array.isArray(variant.detail) && variant.detail.length > 0) {
             variant.colors = variant.detail.map((item: any) => ({
-              code: `#${item.colorCode}`
+              code: item.colorCode.startsWith("#") ? item.colorCode : `#${item.colorCode}`,
             }));
           } else {
             variant.colors = [];

@@ -9,12 +9,13 @@
 
                 <div *ngIf="selectedHandset.detail && selectedHandset.detail.length > 0">
                     <div class="flex justify-center items-center space-x-2">
-                      <div *ngFor="let detail of selectedHandset.detail; let i = index"
+                        <div *ngFor="let detail of selectedHandset.detail; let i = index"
                         (click)="selectColor(i); $event.stopPropagation()"
-                        [ngStyle]="{ 'background-color': detail.colorCode }"
+                        [ngStyle]="{ 'background-color': getColorCode(detail.colorCode) }"
                         class="w-[35px] h-[35px] rounded-full border cursor-pointer"
                         [ngClass]="{ 'border-2 border-[#8bc540]': selectedColorIndex === i, 'border-gray-400': selectedColorIndex !== i }">
-                      </div>
+                    </div>
+                    
                     </div>
 
                 <div class="flex justify-center items-center gap-1 mt-[16px]">
