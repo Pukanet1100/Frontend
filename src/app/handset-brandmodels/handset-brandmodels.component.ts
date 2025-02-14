@@ -15,7 +15,7 @@ export class HandsetBrandmodelsComponent implements OnInit {
 
   constructor(private apiservice: ApiService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.apiservice.getBrands().subscribe((data: any[]) => {
       this.brands = data;
     });

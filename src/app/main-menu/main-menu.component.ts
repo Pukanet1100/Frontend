@@ -34,7 +34,7 @@ export class MainMenuComponent {
     this.isSelected = selected;
   }
 
-  onSearchCleared(): void {
+  onSearchCleared() {
     this.isSearchMode = false;
   }
 }

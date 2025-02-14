@@ -25,7 +25,7 @@ export class ApiService {
     return this.http.get<any[]>(`${this.apiUrlhandset}?commercialName_like=${searchTerm}`);
   }
 
-  setSelectedHandset(handset: any): void {
+  setSelectedHandset(handset: any) {
     this.selectedHandset = handset;
   }
 

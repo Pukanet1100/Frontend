@@ -8,7 +8,7 @@ export class SelectedProductService {
 
   constructor() {}
 
-  setSelectedProduct(product: any): void {
+  setSelectedProduct(product: any) {
     localStorage.setItem(this.productKey, JSON.stringify(product));
   }
 
@@ -17,7 +17,7 @@ export class SelectedProductService {
     return product ? JSON.parse(product) : null;
   }
 
-  clearSelectedProduct(): void {
+  clearSelectedProduct() {
     localStorage.removeItem(this.productKey);
   }
 }

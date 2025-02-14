@@ -14,7 +14,7 @@ export class HandsetProductComponent implements OnChanges {
 
   constructor(private selectedProductService: SelectedProductService) { }
 
-  ngOnChanges(): void {
+  ngOnChanges() {
     if (this.handsets) {
       if (!Array.isArray(this.handsets)) {
         this.handsets = [this.handsets];

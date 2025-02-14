@@ -18,7 +18,7 @@ export class SearchComponent {
 
   constructor(private apiService: ApiService) {}
 
-  onSearch(): void {
+  onSearch() {
     clearTimeout(this.searchTimeout);
 
     this.searchTimeout = setTimeout(() => {
@@ -39,7 +39,7 @@ export class SearchComponent {
     }, 800);
   }
 
-  selectHandset(handset: any): void {
+  selectHandset(handset: any) {
     this.selectedHandset = handset.commercialName;
     this.showDropdown = false;
     this.handsetSelected.emit(handset);

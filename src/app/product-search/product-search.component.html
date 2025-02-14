@@ -2,21 +2,20 @@
     <div *ngIf="selectedHandset" class="mb-[40px] w-[235px] h-[370px]">
         <div class="text-[24px] font-bold mb-2">{{ selectedHandset.subGroupModel }}</div>
         <div class="p-[16px] border-[2px] rounded-[8px] cursor-pointer"
-            [ngClass]="{'border-[#8bc540] bg-[#8bc540] bg-opacity-30': isSelected}"
-            (click)="toggleSelect()">
+            [ngClass]="{'border-[#8bc540] bg-[#8bc540] bg-opacity-30': isSelected}" (click)="toggleSelect()">
             <div class="text-center text-[18px] font-bold mb-2">{{ selectedHandset.commercialName }}</div>
             <img [src]="selectedHandset.thumbnail || '../../assets/icon/image.png'"
                 class="w-full h-[150px] object-contain mx-auto mb-[24px]" (error)="onImageError($event)" />
-            
-            <div *ngIf="selectedHandset.detail && selectedHandset.detail.length > 0">
-                <div class="flex justify-center items-center space-x-2">
-                    <div *ngFor="let detail of selectedHandset.detail; let i = index" 
+
+                <div *ngIf="selectedHandset.detail && selectedHandset.detail.length > 0">
+                    <div class="flex justify-center items-center space-x-2">
+                      <div *ngFor="let detail of selectedHandset.detail; let i = index"
                         (click)="selectColor(i); $event.stopPropagation()"
                         [ngStyle]="{ 'background-color': detail.colorCode }"
                         class="w-[35px] h-[35px] rounded-full border cursor-pointer"
                         [ngClass]="{ 'border-2 border-[#8bc540]': selectedColorIndex === i, 'border-gray-400': selectedColorIndex !== i }">
+                      </div>
                     </div>
-                </div>
 
                 <div class="flex justify-center items-center gap-1 mt-[16px]">
                     <span>ราคา</span>

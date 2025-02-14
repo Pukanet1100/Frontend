@@ -60,14 +60,14 @@ export class AddressAddComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.addressService.getAddressData().subscribe((data) => {
       this.addressData = data;
       this.provinces = [...new Set(data.map(item => item.province))];
     });
   }
 
-  onProvinceChange(): void {
+  onProvinceChange() {
     this.amphoes = [...new Set(this.addressData
       .filter(item => item.province === this.address.province)
       .map(item => item.amphoe)
@@ -77,7 +77,7 @@ export class AddressAddComponent implements OnInit {
     this.address.postalCode = '';
   }
 
-  onAmphoeChange(): void {
+  onAmphoeChange() {
     this.districts = [...new Set(this.addressData
       .filter(item => item.province === this.address.province && item.amphoe === this.address.district)
       .map(item => item.district)
@@ -86,7 +86,7 @@ export class AddressAddComponent implements OnInit {
     this.address.postalCode = '';
   }
 
-  onDistrictChange(): void {
+  onDistrictChange() {
     const selected = this.addressData.find(item =>
       item.province === this.address.province &&
       item.amphoe === this.address.district &&
